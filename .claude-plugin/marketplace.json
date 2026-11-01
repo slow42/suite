@@ -7,6 +7,11 @@
   },
   "plugins": [
     {
+      "name": "suite-sync",
+      "source": "./plugins/suite-sync",
+      "description": "Enables every suite plugin at user scope and keeps the suite marketplace on autoUpdate"
+    },
+    {
       "name": "context-analysis",
       "source": "./plugins/context-analysis"
     },
@@ -44,8 +49,7 @@
       "name": "mattpocock-skills",
       "source": {
         "source": "url",
-        "url": "https://github.com/mattpocock/skills.git",
-        "sha": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa"
+        "url": "https://github.com/mattpocock/skills.git"
       }
     }
   ]

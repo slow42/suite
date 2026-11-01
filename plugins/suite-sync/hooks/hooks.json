@@ -1,0 +1,16 @@
+{
+  "description": "Enable every suite plugin at user scope and keep the marketplace on autoUpdate",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/enable_all.py",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
+  }
+}

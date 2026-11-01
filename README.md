@@ -4,11 +4,12 @@ Personal plugin marketplace for AI coding agents: one repo, installable in Claud
 
 ## Install
 
-**Claude Code**
+**Claude Code** (one-time bootstrap; afterwards everything in suite is on at user scope and tracks `main`)
 ```
-/plugin marketplace add slow42/suite
-/plugin install <name>@suite
+claude plugin marketplace add slow42/suite
+claude plugin install suite-sync@suite --scope user
 ```
+On each session start `suite-sync` sets the marketplace to `autoUpdate` and installs every listed plugin you haven't decided on. Opt out of one with `"<name>@suite": false` in `~/.claude/settings.json` `enabledPlugins`; it stays off.
 
 **Codex** (0.164+ reads `.claude-plugin/marketplace.json` natively)
 ```
@@ -22,6 +23,7 @@ codex plugin add <name>@suite
 
 | Plugin | Source | What it does | Claude Code | Codex | Cursor |
 |---|---|---|---|---|---|
+| suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate | ✓ | — | — |
 | context-analysis | local | Diagnose and cut context/token bloat (MCP tools, memory files) | ✓ | ✓ | ✓ |
 | stale-session-guard | local | Block resuming a cache-expired session over 100k tokens (`EATMYTOKENS` overrides) | ✓ | no-op¹ | — |
 | git-protect | local | Block direct commits to main/master | ✓ | trust once² | — |
@@ -29,7 +31,7 @@ codex plugin add <name>@suite
 | suite-dev | local | Add plugins and skills to this marketplace | ✓ | ✓ | ✓ |
 | project-memory | vendored from anthropics/claude-plugins-official | Audit and update CLAUDE.md | ✓ | ✓ | — |
 | code-review | anthropics/claude-plugins-official | PR code review | ✓ | —³ | — |
-| mattpocock-skills | mattpocock/skills (pinned) | Matt Pocock's skill collection | ✓ | ✓ | — |
+| mattpocock-skills | mattpocock/skills | Matt Pocock's skill collection | ✓ | ✓ | — |
 
 1. Reads Claude Code's transcript format; in Codex it installs but never blocks.
 2. Codex runs plugin hooks only after you approve each one in interactive `codex` (requires `[features] hooks = true`).
@@ -52,4 +54,4 @@ python3 scripts/suite.py sync                             # regenerate derived m
 python3 scripts/suite.py check                            # CI: stale manifests, malformed skills, Codex-invisible sources
 ```
 
-Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
+Nothing is pinned: no `version` in any `plugin.json` or marketplace entry and no `sha`/`commit` on sources, so every push reaches every machine (`check` enforces this). Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
