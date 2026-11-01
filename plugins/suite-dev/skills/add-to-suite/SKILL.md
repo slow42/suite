@@ -25,12 +25,11 @@ description: Add a plugin or skill to the suite marketplace repo (github.com/slo
 ## New skill in an existing plugin
 
 1. Create `plugins/<plugin>/skills/<skill>/SKILL.md`; frontmatter `name` must equal the directory name.
-2. Bump `version` in `plugins/<plugin>/.claude-plugin/plugin.json` if it has one.
-3. Run `python3 scripts/suite.py sync` then `check`.
+2. Run `python3 scripts/suite.py sync` then `check`.
 
 ## External plugin
 
-Add an entry whose `source` is `{"source": "git-subdir", "url": ..., "path": ..., "ref"|"sha": ...}` or `{"source": "url", "url": "https://github.com/<owner>/<repo>.git", "sha": ...}`. Do not use `"source": "github"` — Codex ignores it.
+Add an entry whose `source` is `{"source": "git-subdir", "url": ..., "path": ...}` or `{"source": "url", "url": "https://github.com/<owner>/<repo>.git"}`. Never pin: no `version`, `sha`, or `commit`; suite tracks latest. Do not use `"source": "github"` — Codex ignores it.
 
 ## Writing a skill
 
@@ -40,4 +39,4 @@ Add an entry whose `source` is `{"source": "git-subdir", "url": ..., "path": ...
 
 ## Ship
 
-Run `claude plugin validate .`, commit on a branch, and open a PR. After merge, refresh with `/plugin marketplace update suite` (Claude Code) or `codex plugin marketplace upgrade suite` (Codex).
+Run `claude plugin validate .`, commit on a branch, and open a PR. Once on `main`, Claude Code picks it up automatically (autoUpdate + suite-sync enable it at user scope); refresh sooner with `/plugin marketplace update suite` or `codex plugin marketplace upgrade suite` (Codex).

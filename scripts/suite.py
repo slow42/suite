@@ -27,6 +27,7 @@ CURSOR_MARKETPLACE = ROOT / ".cursor-plugin" / "marketplace.json"
 AGENT_PLUGINS_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 AGENT_PLUGINS_FIELDS = ("name", "version", "description", "author", "homepage", "repository", "license", "keywords")
 AUTHOR_FIELDS = ("name", "email", "url")
+PIN_FIELDS = {"sha", "commit"}
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.S)
 
@@ -113,8 +114,15 @@ def manifest_errors() -> list[str]:
         elif read_json(manifest)["name"] != entry["name"]:
             errors.append(f"{entry['name']}: plugin.json name differs from its marketplace entry")
     for entry in marketplace["plugins"]:
-        if isinstance(entry["source"], dict) and entry["source"].get("source") == "github":
-            errors.append(f"{entry['name']}: 'github' sources are invisible to Codex; use {{'source': 'url', 'url': 'https://github.com/<repo>.git', 'sha': ...}}")
+        source = entry["source"]
+        if isinstance(source, dict) and source.get("source") == "github":
+            errors.append(f"{entry['name']}: 'github' sources are invisible to Codex; use {{'source': 'url', 'url': 'https://github.com/<repo>.git'}}")
+        if "version" in entry or (isinstance(source, dict) and PIN_FIELDS & source.keys()):
+            errors.append(f"{entry['name']}: pinned in marketplace.json; suite tracks the latest commit, drop version/sha/commit")
+    for _, directory in local_plugins(marketplace):
+        manifest = directory / ".claude-plugin" / "plugin.json"
+        if manifest.is_file() and "version" in read_json(manifest):
+            errors.append(f"{manifest.relative_to(ROOT)}: has a version, which freezes autoUpdate until bumped; remove it")
     for directory in sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir()):
         if directory.name not in listed:
             errors.append(f"plugins/{directory.name}: not listed in .claude-plugin/marketplace.json")
@@ -180,7 +188,7 @@ def cmd_new(args: argparse.Namespace) -> int:
     (directory / "skills" / skill).mkdir(parents=True)
     (directory / "skills" / skill / "SKILL.md").write_text(SKILL_TEMPLATE.format(skill=skill, title=skill.replace("-", " ").capitalize()))
     (directory / ".claude-plugin").mkdir()
-    manifest = {"name": name, "version": "0.1.0", "description": args.description, "author": marketplace["owner"]}
+    manifest = {"name": name, "description": args.description, "author": marketplace["owner"]}
     (directory / ".claude-plugin" / "plugin.json").write_text(dump(manifest))
     marketplace["plugins"].append({"name": name, "source": f"./plugins/{name}", "description": args.description})
     MARKETPLACE.write_text(dump(marketplace))

@@ -1,0 +1,5 @@
+{
+  "name": "suite-sync",
+  "description": "Enables every suite plugin at user scope and keeps the suite marketplace on autoUpdate",
+  "author": { "name": "slow42" }
+}
