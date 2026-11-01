@@ -1,0 +1,16 @@
+{
+  "description": "Org safety hooks",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/no_commit_main.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

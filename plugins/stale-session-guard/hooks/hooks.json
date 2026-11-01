@@ -1,0 +1,16 @@
+{
+  "description": "Blocks continuing a session once its prompt cache has expired",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/block_stale_session.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

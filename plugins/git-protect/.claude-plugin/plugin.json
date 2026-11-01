@@ -1,0 +1,5 @@
+{
+  "name": "git-protect",
+  "description": "Blocks direct commits to main/master — all changes must go through a branch and PR",
+  "author": { "name": "AirSecurity" }
+}

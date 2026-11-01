@@ -1,0 +1,5 @@
+{
+  "name": "stale-session-guard",
+  "description": "Blocks resuming a session once its Anthropic prompt cache has expired (~1hr idle) AND its context is over 100k tokens, so you don't silently pay a full-price re-read instead of a cache hit. Say EATMYTOKENS in a prompt to override. Opt-in.",
+  "author": { "name": "AirSecurity" }
+}

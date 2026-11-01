@@ -1,0 +1,5 @@
+{
+  "name": "worktree-shortcut",
+  "description": "Adds /wt [task] to create a task-scoped git worktree+branch and switch the session into it via EnterWorktree",
+  "author": { "name": "AirSecurity" }
+}
