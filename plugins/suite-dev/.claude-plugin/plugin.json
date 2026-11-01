@@ -1,0 +1,6 @@
+{
+  "name": "suite-dev",
+  "version": "0.1.0",
+  "description": "Add new plugins and skills to the suite marketplace so they load in Claude Code, Codex, and Cursor",
+  "author": { "name": "slow42" }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "context-analysis",
+  "description": "Diagnose and reduce Claude Code context/token bloat — pinpoint heavy MCP tools/servers, prune redundant built-in tools, flag stale memory files, and verify which reload actually applies a config change.",
+  "author": {
+    "name": "AirSecurity"
+  }
+}

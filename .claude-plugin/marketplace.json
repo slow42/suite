@@ -1,24 +1,52 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "suite",
-  "description": "Personal Claude Code plugins and curated external skills",
-  "owner": { "name": "slow42" },
+  "description": "Personal plugins for Claude Code, Codex, and Cursor, plus curated external ones",
+  "owner": {
+    "name": "slow42"
+  },
   "plugins": [
-    { "name": "context-analysis", "source": "./plugins/context-analysis" },
-    { "name": "stale-session-guard", "source": "./plugins/stale-session-guard" },
-    { "name": "git-protect", "source": "./plugins/git-protect" },
-    { "name": "worktree-shortcut", "source": "./plugins/worktree-shortcut" },
     {
-      "name": "code-review",
-      "source": { "source": "git-subdir", "url": "https://github.com/anthropics/claude-plugins-official.git", "path": "plugins/code-review", "ref": "main" }
+      "name": "context-analysis",
+      "source": "./plugins/context-analysis"
     },
     {
-      "name": "claude-md-management",
-      "source": { "source": "git-subdir", "url": "https://github.com/anthropics/claude-plugins-official.git", "path": "plugins/claude-md-management", "ref": "main" }
+      "name": "stale-session-guard",
+      "source": "./plugins/stale-session-guard"
+    },
+    {
+      "name": "git-protect",
+      "source": "./plugins/git-protect"
+    },
+    {
+      "name": "worktree-shortcut",
+      "source": "./plugins/worktree-shortcut"
+    },
+    {
+      "name": "suite-dev",
+      "source": "./plugins/suite-dev",
+      "description": "Add new plugins and skills to this marketplace"
+    },
+    {
+      "name": "code-review",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/code-review",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "project-memory",
+      "source": "./plugins/project-memory"
     },
     {
       "name": "mattpocock-skills",
-      "source": { "source": "github", "repo": "mattpocock/skills", "commit": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa", "sha": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa" }
+      "source": {
+        "source": "url",
+        "url": "https://github.com/mattpocock/skills.git",
+        "sha": "a496f5513d4a4cf889bc48e189e579f4b0bdf6aa"
+      }
     }
   ]
 }

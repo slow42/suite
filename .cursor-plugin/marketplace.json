@@ -1,0 +1,22 @@
+{
+  "name": "suite",
+  "owner": {
+    "name": "slow42"
+  },
+  "description": "Personal plugins for Claude Code, Codex, and Cursor, plus curated external ones",
+  "plugins": [
+    {
+      "name": "context-analysis",
+      "source": "./plugins/context-analysis"
+    },
+    {
+      "name": "worktree-shortcut",
+      "source": "./plugins/worktree-shortcut"
+    },
+    {
+      "name": "suite-dev",
+      "source": "./plugins/suite-dev",
+      "description": "Add new plugins and skills to this marketplace"
+    }
+  ]
+}

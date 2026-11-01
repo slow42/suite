@@ -1,14 +1,15 @@
 ---
-description: Create a worktree+branch scoped to a task and switch this session into it
+name: wt
+description: Create a worktree+branch scoped to a task and switch this session into it. Use when the user says "/wt", "new worktree for X", or wants to start a task on its own branch without disturbing the current checkout.
 argument-hint: [task description]
 allowed-tools: Bash, EnterWorktree, mcp__linear, mcp__claude_ai_Linear
 ---
 
-Create a git worktree on a new branch scoped to a task, then switch this session into it with `EnterWorktree`. The worktree lands under `.claude/worktrees/<branch>` and the session's working directory follows — no shell wrapper, no clipboard.
+Create a git worktree on a new branch scoped to a task, then move this session into it. The worktree lands under `.claude/worktrees/<branch>`.
 
 ## 1. Establish the task
 
-`$ARGUMENTS` is the task this worktree is for. If it's empty, ask the user "What's this worktree for?" and wait — the task is what names the branch. One line is enough; don't interrogate.
+The task is whatever the user passed after `/wt` (`$ARGUMENTS` in Claude Code) or described in their request. If there is none, ask the user "What's this worktree for?" and wait — the task is what names the branch. One line is enough; don't interrogate.
 
 ## 2. Link a Linear issue (only when it earns a place in the branch name)
 
@@ -31,4 +32,9 @@ If the derived name would violate the convention, quote the rule and its source 
 
 ## 4. Create and enter the worktree
 
-Call `EnterWorktree` with `name` set to the resolved branch. It creates the worktree under `.claude/worktrees/<branch>`, cuts the branch off your current HEAD (the repo sets `worktree.baseRef: head`), and switches this session into it. So run `/wt` from the base you want — usually an up-to-date `main`. Confirm the new path and branch, then carry on with the task there.
+Run this from the base you want — usually an up-to-date `main`; the branch forks off the current HEAD.
+
+- **Claude Code:** call `EnterWorktree` with `name` set to the resolved branch. It creates `.claude/worktrees/<branch>` and switches this session into it.
+- **Other agents:** run `git worktree add .claude/worktrees/<branch> -b <branch>` from the repo root, then work from that directory for the rest of the task (prefix commands with `cd` into it or set the working directory, whichever the agent supports).
+
+Confirm the new path and branch, then carry on with the task there.
