@@ -29,7 +29,7 @@ description: Add a plugin or skill to the suite marketplace repo (github.com/slo
 
 ## External plugin
 
-Add an entry whose `source` is `{"source": "git-subdir", "url": ..., "path": ...}` or `{"source": "url", "url": "https://github.com/<owner>/<repo>.git"}`. Never pin: no `version`, `sha`, or `commit`; suite tracks latest. Do not use `"source": "github"` — Codex ignores it.
+Add an entry whose `source` is `{"source": "git-subdir", "url": ..., "path": ...}` or `{"source": "url", "url": "https://github.com/<owner>/<repo>.git"}`. Pin third-party sources with `sha` to a reviewed commit unless the user trusts the publisher to track latest (Anthropic's are unpinned); never use `version`. Do not use `"source": "github"` — Codex ignores it.
 
 ## Writing a skill
 

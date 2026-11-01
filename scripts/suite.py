@@ -27,7 +27,6 @@ CURSOR_MARKETPLACE = ROOT / ".cursor-plugin" / "marketplace.json"
 AGENT_PLUGINS_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 AGENT_PLUGINS_FIELDS = ("name", "version", "description", "author", "homepage", "repository", "license", "keywords")
 AUTHOR_FIELDS = ("name", "email", "url")
-PIN_FIELDS = {"sha", "commit"}
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.S)
 
@@ -117,8 +116,10 @@ def manifest_errors() -> list[str]:
         source = entry["source"]
         if isinstance(source, dict) and source.get("source") == "github":
             errors.append(f"{entry['name']}: 'github' sources are invisible to Codex; use {{'source': 'url', 'url': 'https://github.com/<repo>.git'}}")
-        if "version" in entry or (isinstance(source, dict) and PIN_FIELDS & source.keys()):
-            errors.append(f"{entry['name']}: pinned in marketplace.json; suite tracks the latest commit, drop version/sha/commit")
+        if isinstance(source, str) and "version" in entry:
+            errors.append(f"{entry['name']}: own plugins are never pinned; drop version from its marketplace entry")
+        if isinstance(source, dict) and "version" in entry:
+            errors.append(f"{entry['name']}: pin an external plugin with sha on its source, not version")
     for _, directory in local_plugins(marketplace):
         manifest = directory / ".claude-plugin" / "plugin.json"
         if manifest.is_file() and "version" in read_json(manifest):
