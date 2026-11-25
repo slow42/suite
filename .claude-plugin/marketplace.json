@@ -16,10 +16,6 @@
       "source": "./plugins/context-analysis"
     },
     {
-      "name": "stale-session-guard",
-      "source": "./plugins/stale-session-guard"
-    },
-    {
       "name": "git-protect",
       "source": "./plugins/git-protect"
     },
@@ -38,6 +34,15 @@
         "source": "git-subdir",
         "url": "https://github.com/anthropics/claude-plugins-official.git",
         "path": "plugins/code-review",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "pr-review-toolkit",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/pr-review-toolkit",
         "ref": "main"
       }
     },
