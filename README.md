@@ -25,18 +25,17 @@ codex plugin add <name>@suite
 |---|---|---|---|---|---|
 | suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate | ✓ | — | — |
 | context-analysis | local | Diagnose and cut context/token bloat (MCP tools, memory files) | ✓ | ✓ | ✓ |
-| stale-session-guard | local | Block resuming a cache-expired session over 100k tokens (`EATMYTOKENS` overrides) | ✓ | no-op¹ | — |
-| git-protect | local | Block direct commits to main/master | ✓ | trust once² | — |
+| git-protect | local | Block direct commits to main/master | ✓ | trust once¹ | — |
 | worktree-shortcut | local | `/wt [task]` creates a task-scoped worktree+branch and switches into it | ✓ | ✓ | ✓ |
 | suite-dev | local | Add plugins and skills to this marketplace | ✓ | ✓ | ✓ |
 | project-memory | vendored from anthropics/claude-plugins-official | Audit and update CLAUDE.md | ✓ | ✓ | — |
-| code-review | anthropics/claude-plugins-official | PR code review | ✓ | —³ | — |
+| code-review | anthropics/claude-plugins-official | PR code review | ✓ | —² | — |
+| pr-review-toolkit | anthropics/claude-plugins-official | PR review agents: code, tests, silent failures, comments, types, simplification | ✓ | —² | — |
 | mattpocock-skills | mattpocock/skills (pinned) | Matt Pocock's skill collection | ✓ | ✓ | — |
 | herdr | vendored from herdrdev/herdr v0.9.5 | Drive Herdr panes/tabs/workspaces and agents inside it (only when `HERDR_ENV=1`) | ✓ | ✓ | ✓ |
 
-1. Reads Claude Code's transcript format; in Codex it installs but never blocks.
-2. Codex runs plugin hooks only after you approve each one in interactive `codex` (requires `[features] hooks = true`).
-3. Command-only plugin; Codex converts commands to skills only when a plugin also has a `skills/` folder.
+1. Codex runs plugin hooks only after you approve each one in interactive `codex` (requires `[features] hooks = true`).
+2. Command-only plugin; Codex converts commands to skills only when a plugin also has a `skills/` folder.
 
 Cursor lists only local plugins built purely from skills and MCP servers, which is what [Agent Plugins](https://agent-plugins.org) can carry.
 
@@ -55,4 +54,4 @@ python3 scripts/suite.py sync                             # regenerate derived m
 python3 scripts/suite.py check                            # CI: stale manifests, malformed skills, Codex-invisible sources
 ```
 
-Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills is pinned (bump the sha after reviewing upstream), Anthropic's code-review tracks `main`. Vendored copies (project-memory, herdr) are pinned by content; re-copy to update. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
+Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills is pinned (bump the sha after reviewing upstream), Anthropic's code-review and pr-review-toolkit track `main`. Vendored copies (project-memory, herdr) are pinned by content; re-copy to update. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
