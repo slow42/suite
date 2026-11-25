@@ -52,6 +52,11 @@
         "url": "https://github.com/mattpocock/skills.git",
         "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d"
       }
+    },
+    {
+      "name": "herdr",
+      "source": "./plugins/herdr",
+      "description": "Control Herdr terminal-multiplexer panes, tabs, workspaces, and agents (vendored from herdrdev/herdr v0.9.5)"
     }
   ]
 }

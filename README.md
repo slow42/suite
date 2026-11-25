@@ -32,6 +32,7 @@ codex plugin add <name>@suite
 | project-memory | vendored from anthropics/claude-plugins-official | Audit and update CLAUDE.md | ✓ | ✓ | — |
 | code-review | anthropics/claude-plugins-official | PR code review | ✓ | —³ | — |
 | mattpocock-skills | mattpocock/skills (pinned) | Matt Pocock's skill collection | ✓ | ✓ | — |
+| herdr | vendored from herdrdev/herdr v0.9.5 | Drive Herdr panes/tabs/workspaces and agents inside it (only when `HERDR_ENV=1`) | ✓ | ✓ | ✓ |
 
 1. Reads Claude Code's transcript format; in Codex it installs but never blocks.
 2. Codex runs plugin hooks only after you approve each one in interactive `codex` (requires `[features] hooks = true`).
@@ -54,4 +55,4 @@ python3 scripts/suite.py sync                             # regenerate derived m
 python3 scripts/suite.py check                            # CI: stale manifests, malformed skills, Codex-invisible sources
 ```
 
-Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills is pinned (bump the sha after reviewing upstream), Anthropic's code-review tracks `main`. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
+Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills is pinned (bump the sha after reviewing upstream), Anthropic's code-review tracks `main`. Vendored copies (project-memory, herdr) are pinned by content; re-copy to update. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
