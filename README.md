@@ -23,7 +23,7 @@ codex plugin add <name>@suite
 
 | Plugin | Source | What it does | Claude Code | Codex | Cursor |
 |---|---|---|---|---|---|
-| suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate | ✓ | — | — |
+| suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate; `/suite-sync:sync` runs it mid-session | ✓ | — | — |
 | context-analysis | local | Diagnose and cut context/token bloat (MCP tools, memory files) | ✓ | ✓ | ✓ |
 | git-protect | local | Block direct commits to main/master | ✓ | trust once¹ | — |
 | worktree-shortcut | local | `/wt [task]` creates a task-scoped worktree+branch and switches into it | ✓ | ✓ | ✓ |
