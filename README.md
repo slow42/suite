@@ -23,7 +23,7 @@ codex plugin add <name>@suite
 
 | Plugin | Source | What it does | Claude Code | Codex | Cursor |
 |---|---|---|---|---|---|
-| suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate | ✓ | — | — |
+| suite-sync | local | Enable every suite plugin at user scope; keep the marketplace on autoUpdate; `/suite-sync:sync` runs it mid-session | ✓ | — | — |
 | context-analysis | local | Diagnose and cut context/token bloat (MCP tools, memory files) | ✓ | ✓ | ✓ |
 | git-protect | local | Block direct commits to main/master | ✓ | trust once¹ | — |
 | worktree-shortcut | local | `/wt [task]` creates a task-scoped worktree+branch and switches into it | ✓ | ✓ | ✓ |
@@ -33,6 +33,7 @@ codex plugin add <name>@suite
 | pr-review-toolkit | anthropics/claude-plugins-official | PR review agents: code, tests, silent failures, comments, types, simplification | ✓ | —² | — |
 | mattpocock-skills | mattpocock/skills (pinned) | Matt Pocock's skill collection | ✓ | ✓ | — |
 | herdr | vendored from herdrdev/herdr v0.9.5 | Drive Herdr panes/tabs/workspaces and agents inside it (only when `HERDR_ENV=1`) | ✓ | ✓ | ✓ |
+| mintlify | mintlify/mintlify-claude-plugin (pinned) | Write and publish Mintlify docs sites; adds Mintlify Search and Admin MCP servers | ✓ | ✓ | — |
 
 1. Codex runs plugin hooks only after you approve each one in interactive `codex` (requires `[features] hooks = true`).
 2. Command-only plugin; Codex converts commands to skills only when a plugin also has a `skills/` folder.
@@ -54,4 +55,4 @@ python3 scripts/suite.py sync                             # regenerate derived m
 python3 scripts/suite.py check                            # CI: stale manifests, malformed skills, Codex-invisible sources
 ```
 
-Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills is pinned (bump the sha after reviewing upstream), Anthropic's code-review and pr-review-toolkit track `main`. Vendored copies (project-memory, herdr) are pinned by content; re-copy to update. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.
+Own plugins are never pinned (no `version`), so every push reaches every machine; `check` enforces this. External plugins track upstream unless pinned with `sha` to a reviewed commit: mattpocock-skills and mintlify are pinned (bump the sha after reviewing upstream), Anthropic's code-review and pr-review-toolkit track `main`. Vendored copies (project-memory, herdr) are pinned by content; re-copy to update. Prefer skills over commands: Claude Code runs a skill as `/name`, and every other agent can load it. External plugins must use `git-subdir` or `url` sources; Codex ignores `github`. Names can't start with `claude-` (Claude Code reserves them), and an external plugin's marketplace name must match its own `plugin.json` name (Codex enforces this), so plugins named `claude-*` upstream get vendored and renamed.

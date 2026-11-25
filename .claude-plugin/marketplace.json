@@ -62,6 +62,14 @@
       "name": "herdr",
       "source": "./plugins/herdr",
       "description": "Control Herdr terminal-multiplexer panes, tabs, workspaces, and agents (vendored from herdrdev/herdr v0.9.5)"
+    },
+    {
+      "name": "mintlify",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/mintlify/mintlify-claude-plugin.git",
+        "sha": "38f3fe6cdb91be01bf983bf9b2d692dfcaaf0e7e"
+      }
     }
   ]
 }
